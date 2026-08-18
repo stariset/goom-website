@@ -1,0 +1,262 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+/* 
+ * ==========================================
+ * BRAND COLORS & TYPOGRAPHY
+ * ==========================================
+ * To change your brand colors and fonts, edit the variables below.
+ * Fonts are declared in the `@theme inline` block.
+ * Colors are declared in the `:root` block below.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-lime: var(--lime);
+
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Tightened scale — Plus Jakarta Sans has a large x-height, so the
+     inherited serif-era sizes read oversized. */
+  --text-xs: 0.6875rem;
+  --text-xs--line-height: 1.45;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.55;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.65;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.1875rem;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 1.375rem;
+  --text-2xl--line-height: 1.35;
+  --text-3xl: 1.6875rem;
+  --text-3xl--line-height: 1.25;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 1.15;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 1.08;
+  --text-6xl: 3rem;
+  --text-6xl--line-height: 1.04;
+  --text-7xl: 3.75rem;
+  --text-7xl--line-height: 1;
+  --text-8xl: 4.5rem;
+  --text-8xl--line-height: 1;
+  --text-9xl: 6rem;
+  --text-9xl--line-height: 1;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Warm bone canvas with deep ink — premium editorial tech */
+  --background: oklch(0.97 0.008 80);
+  --foreground: oklch(0.18 0.012 260);
+  --ink: oklch(0.14 0.015 260);
+  --surface: oklch(0.94 0.01 80);
+  --surface-2: oklch(0.91 0.012 80);
+
+  --card: oklch(0.985 0.005 80);
+  --card-foreground: oklch(0.18 0.012 260);
+  --popover: oklch(0.985 0.005 80);
+  --popover-foreground: oklch(0.18 0.012 260);
+
+  --primary: oklch(0.18 0.012 260);
+  --primary-foreground: oklch(0.97 0.008 80);
+
+  --secondary: oklch(0.91 0.012 80);
+  --secondary-foreground: oklch(0.18 0.012 260);
+
+  --muted: oklch(0.93 0.008 80);
+  --muted-foreground: oklch(0.48 0.012 260);
+
+  --accent: oklch(0.91 0.012 80);
+  --accent-foreground: oklch(0.18 0.012 260);
+
+  /* Signature electric lime accent */
+  --lime: oklch(0.88 0.22 125);
+
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.86 0.012 80);
+  --input: oklch(0.86 0.012 80);
+  --ring: oklch(0.18 0.012 260);
+}
+
+.dark {
+  --background: oklch(0.14 0.015 260);
+  --foreground: oklch(0.97 0.008 80);
+  --ink: oklch(0.97 0.008 80);
+  --surface: oklch(0.18 0.015 260);
+  --surface-2: oklch(0.22 0.018 260);
+  --card: oklch(0.18 0.015 260);
+  --card-foreground: oklch(0.97 0.008 80);
+  --popover: oklch(0.18 0.015 260);
+  --popover-foreground: oklch(0.97 0.008 80);
+  --primary: oklch(0.97 0.008 80);
+  --primary-foreground: oklch(0.14 0.015 260);
+  --secondary: oklch(0.22 0.018 260);
+  --secondary-foreground: oklch(0.97 0.008 80);
+  --muted: oklch(0.22 0.018 260);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --accent: oklch(0.22 0.018 260);
+  --accent-foreground: oklch(0.97 0.008 80);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.7 0.02 260);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background-color: var(--lime);
+    color: var(--ink);
+  }
+}
+
+@utility text-display {
+  font-family: var(--font-display);
+  font-weight: 650;
+  letter-spacing: -0.028em;
+  line-height: 1.03;
+  text-wrap: balance;
+}
+
+@utility text-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "calt" 0;
+}
+
+@utility grain-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--ink) 12%, transparent) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+@utility hairline {
+  border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+}
+
+@utility lime-chip {
+  background-color: var(--lime);
+  color: var(--ink);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+@utility animate-pulse-dot {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility animate-rise {
+  animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(0.4deg); }
+}
+
+@utility animate-float {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+@keyframes shimmer-x {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@utility text-shimmer {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--foreground) 55%, transparent) 0%,
+    var(--foreground) 50%,
+    color-mix(in oklab, var(--foreground) 55%, transparent) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-x 6s linear infinite;
+}
+
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@utility animate-ping-soft {
+  animation: ping-soft 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
