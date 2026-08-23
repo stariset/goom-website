@@ -8,6 +8,7 @@ export interface Post {
   read: string;
   tag: string;
   featured: boolean;
+  content?: string;
 }
 
 export const posts: Post[] = [

@@ -102,12 +102,6 @@ const mobileSections = [
         description: "Small team. High autonomy. Real ownership.",
         icon: <Briefcase className="h-4 w-4" />,
       },
-      {
-        to: "/journal",
-        label: "Journal",
-        description: "Field reports from the engineering team.",
-        icon: <ScrollText className="h-4 w-4" />,
-      },
     ],
   },
 ] as const;
@@ -149,9 +143,8 @@ export function Nav() {
       {/* ── Backdrop ─────────────────────────────────────────────────────── */}
       <div
         onClick={() => setOpen(false)}
-        className={`lg:hidden fixed inset-0 z-40 bg-foreground/30 backdrop-blur-sm transition-opacity duration-300 ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`lg:hidden fixed inset-0 z-40 bg-foreground/30 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         aria-hidden="true"
       />
 
@@ -161,11 +154,10 @@ export function Nav() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           {/* ── Nav bar ──────────────────────────────────────────────────── */}
           <div
-            className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full px-4 sm:px-6 py-2.5 transition-all duration-500 ${
-              scrolled || open
+            className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full px-4 sm:px-6 py-2.5 transition-all duration-500 ${scrolled || open
                 ? "bg-background/90 backdrop-blur-xl hairline shadow-[0_8px_40px_-12px_rgba(0,0,0,0.12)]"
                 : "bg-transparent"
-            }`}
+              }`}
           >
             <Link to="/" className="flex items-center min-w-0" onClick={() => setOpen(false)}>
               <LogoMark className="block sm:hidden h-7 w-auto" />
@@ -311,16 +303,14 @@ export function Nav() {
                 aria-expanded={open}
               >
                 <span
-                  className={`absolute transition-all duration-200 ${
-                    open ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-75"
-                  }`}
+                  className={`absolute transition-all duration-200 ${open ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-75"
+                    }`}
                 >
                   <X className="h-4 w-4" />
                 </span>
                 <span
-                  className={`absolute transition-all duration-200 ${
-                    open ? "opacity-0 -rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
-                  }`}
+                  className={`absolute transition-all duration-200 ${open ? "opacity-0 -rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
+                    }`}
                 >
                   <Menu className="h-4 w-4" />
                 </span>
@@ -331,11 +321,10 @@ export function Nav() {
           {/* ── Mobile panel ─────────────────────────────────────────────── */}
           <div
             ref={panelRef}
-            className={`lg:hidden mt-3 rounded-[28px] hairline bg-background/97 backdrop-blur-2xl shadow-[0_32px_80px_-24px_rgba(0,0,0,0.3)] overflow-hidden transition-all duration-300 origin-top ${
-              open
+            className={`lg:hidden mt-3 rounded-[28px] hairline bg-background/97 backdrop-blur-2xl shadow-[0_32px_80px_-24px_rgba(0,0,0,0.3)] overflow-hidden transition-all duration-300 origin-top ${open
                 ? "opacity-100 scale-y-100 translate-y-0 max-h-[82vh] pointer-events-auto"
                 : "opacity-0 scale-y-95 -translate-y-2 max-h-0 pointer-events-none"
-            }`}
+              }`}
             style={{ transformOrigin: "top center" }}
           >
             <div className="overflow-y-auto max-h-[82vh] no-scrollbar p-4 pb-6 flex flex-col gap-5">

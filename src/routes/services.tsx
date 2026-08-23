@@ -87,17 +87,15 @@ function Services() {
             ].map((m) => (
               <div
                 key={m.tag}
-                className={`group relative rounded-3xl hairline p-8 sm:p-10 flex flex-col justify-between min-h-[380px] overflow-hidden transition-colors ${
-                  m.inverted
+                className={`group relative rounded-3xl hairline p-8 sm:p-10 flex flex-col justify-between min-h-[380px] overflow-hidden transition-colors ${m.inverted
                     ? "bg-foreground text-background"
                     : "bg-background hover:bg-surface"
-                }`}
+                  }`}
               >
                 {/* Large watermark number */}
                 <span
-                  className={`pointer-events-none absolute -bottom-4 -right-2 text-[120px] font-bold leading-none select-none ${
-                    m.inverted ? "text-background/8" : "text-foreground/5"
-                  }`}
+                  className={`pointer-events-none absolute -bottom-4 -right-2 text-[120px] font-bold leading-none select-none ${m.inverted ? "text-background/8" : "text-foreground/5"
+                    }`}
                 >
                   {m.tag}
                 </span>

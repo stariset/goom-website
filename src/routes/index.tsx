@@ -52,7 +52,7 @@ const orbit = [
   { label: "Redis", slug: "redis", side: "left", top: "78%", x: "8%", delay: "140ms" },
   { label: "Python", slug: "python", side: "left", top: "92%", x: "-2%", delay: "420ms" },
   { label: "Cloudflare", slug: "cloudflare", side: "left", top: "18%", x: "-3%", delay: "220ms" },
-  
+
   // Right side
   { label: "Rust", slug: "rust", side: "right", top: "8%", x: "4%", delay: "90ms" },
   { label: "Kubernetes", slug: "kubernetes", side: "right", top: "34%", x: "16%", delay: "270ms" },
@@ -92,9 +92,8 @@ function Hero() {
               <span
                 key={w}
                 aria-hidden={idx !== i}
-                className={`italic whitespace-nowrap transition-all duration-700 ${
-                  idx === i ? "relative" : "absolute left-0 top-0"
-                }`}
+                className={`italic whitespace-nowrap transition-all duration-700 ${idx === i ? "relative" : "absolute left-0 top-0"
+                  }`}
                 style={{
                   opacity: idx === i ? 1 : 0,
                   transform: idx === i ? "translateY(0)" : "translateY(0.18em)",
@@ -181,7 +180,7 @@ function Hero() {
               >
                 {/* Subtle internal lime glow on hover */}
                 <div className="absolute inset-0 bg-[var(--lime)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
+
                 <img
                   src={`https://cdn.simpleicons.org/${o.slug}`}
                   alt={`${o.label} logo`}
@@ -227,17 +226,17 @@ function Marquee() {
         {/* Edge gradient masks for a smooth fade in/out */}
         <div className="absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-        
+
         <div className="flex gap-16 sm:gap-24 animate-marquee whitespace-nowrap items-center w-max">
           {[...techStack, ...techStack, ...techStack, ...techStack].map((it, i) => (
             <div
               key={`${it.slug}-${i}`}
               className="flex items-center gap-4 group opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-default"
             >
-              <img 
-                src={`https://cdn.simpleicons.org/${it.slug}`} 
-                alt={it.name} 
-                className="h-7 w-7 sm:h-9 sm:w-9 transition-all duration-300 object-contain group-hover:scale-110 drop-shadow-sm" 
+              <img
+                src={`https://cdn.simpleicons.org/${it.slug}`}
+                alt={it.name}
+                className="h-7 w-7 sm:h-9 sm:w-9 transition-all duration-300 object-contain group-hover:scale-110 drop-shadow-sm"
                 loading="lazy"
               />
               <span className="text-display text-xl sm:text-3xl font-medium tracking-tight text-foreground">
@@ -267,14 +266,14 @@ function AboutUsSummary() {
                 <span className="italic font-light">Both, on purpose.</span>
               </h2>
             </div>
-            
+
             <div className="flex flex-col pt-4 lg:pt-16">
               <p className="text-lg sm:text-xl leading-relaxed text-foreground/80 mb-8">
-                We are a small, senior engineering studio based in Addis Ababa. 
-                We build architecture, realtime backends, and interfaces that teams can trust. 
+                We are a small, senior engineering studio based in Addis Ababa.
+                We build architecture, realtime backends, and interfaces that teams can trust.
                 No slide decks. No junior developers learning on your dime.
               </p>
-              
+
               <Link to="/about" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-[var(--lime)] transition-colors">
                 Read our full story <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -288,42 +287,42 @@ function AboutUsSummary() {
 
 function CapabilitiesSummary() {
   const services = [
-    { 
-      icon: <Code2 className="h-5 w-5 sm:h-6 sm:w-6" />, 
-      title: "High-impact engineering", 
-      desc: "Embedded senior teams that ship production systems alongside yours. We don't just advise; we drop into the repo and accelerate your timeline.", 
+    {
+      icon: <Code2 className="h-5 w-5 sm:h-6 sm:w-6" />,
+      title: "High-impact engineering",
+      desc: "Embedded senior teams that ship production systems alongside yours. We don't just advise; we drop into the repo and accelerate your timeline.",
       span: "md:col-span-2 md:row-span-2",
       hero: true
     },
-    { 
-      icon: <Activity className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "Realtime systems", 
-      desc: "Event-driven backends and streaming pipelines.", 
-      span: "md:col-span-1" 
+    {
+      icon: <Activity className="h-4 w-4 sm:h-5 sm:w-5" />,
+      title: "Realtime systems",
+      desc: "Event-driven backends and streaming pipelines.",
+      span: "md:col-span-1"
     },
-    { 
-      icon: <Cpu className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "Scalable architecture", 
-      desc: "Cloud-native foundations built for heavy loads.", 
-      span: "md:col-span-1" 
+    {
+      icon: <Cpu className="h-4 w-4 sm:h-5 sm:w-5" />,
+      title: "Scalable architecture",
+      desc: "Cloud-native foundations built for heavy loads.",
+      span: "md:col-span-1"
     },
-    { 
-      icon: <Layers className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "Enterprise solutions", 
-      desc: "Bespoke platforms for logistics and operations.", 
-      span: "md:col-span-1" 
+    {
+      icon: <Layers className="h-4 w-4 sm:h-5 sm:w-5" />,
+      title: "Enterprise solutions",
+      desc: "Bespoke platforms for logistics and operations.",
+      span: "md:col-span-1"
     },
-    { 
-      icon: <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "AI orchestration", 
-      desc: "LLM pipelines with strict guardrails.", 
-      span: "md:col-span-1" 
+    {
+      icon: <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" />,
+      title: "AI orchestration",
+      desc: "LLM pipelines with strict guardrails.",
+      span: "md:col-span-1"
     },
-    { 
-      icon: <Shield className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "Security & compliance", 
-      desc: "SOC 2 mindset by default.", 
-      span: "md:col-span-1" 
+    {
+      icon: <Shield className="h-4 w-4 sm:h-5 sm:w-5" />,
+      title: "Security & compliance",
+      desc: "SOC 2 mindset by default.",
+      span: "md:col-span-1"
     },
   ];
 
@@ -348,9 +347,9 @@ function CapabilitiesSummary() {
           {services.map((s, i) => (
             <Reveal key={s.title} delay={i * 50} className={`${s.span} h-full`}>
               <Link to="/services" className={`group relative block rounded-xl hairline bg-background hover:border-foreground/20 hover:shadow-lg transition-all duration-500 h-full flex flex-col overflow-hidden ${s.hero ? 'p-6 sm:p-8' : 'p-4 sm:p-5'}`}>
-                
+
                 <div className="absolute inset-0 bg-gradient-to-br from-[var(--lime)]/0 to-[var(--lime)]/0 group-hover:from-[var(--lime)]/5 group-hover:to-transparent transition-all duration-700 pointer-events-none" />
-                
+
                 <ArrowUpRight className="absolute top-4 right-4 h-4 w-4 text-foreground opacity-0 -translate-x-3 translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500 ease-out" />
 
                 <div className="relative z-10 flex flex-col h-full">
@@ -403,7 +402,7 @@ function ProcessSummary() {
               <div className="relative pl-8 border-l border-border hover:border-foreground transition-colors duration-500 py-2 group">
                 {/* Active node dot */}
                 <div className="absolute left-[-5px] top-4 h-2.5 w-2.5 rounded-full bg-border group-hover:bg-foreground transition-colors duration-500" />
-                
+
                 <div className="text-mono text-[10px] text-muted-foreground mb-3">{step.n}</div>
                 <h3 className="text-xl font-bold mb-3">{step.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
@@ -443,7 +442,7 @@ function Testimonials() {
 
   return (
     <section className="relative py-24 sm:py-32 lg:py-40 border-y hairline overflow-hidden bg-surface/30">
-      
+
       {/* Centered Header */}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mb-16 sm:mb-24 flex flex-col items-center text-center">
         <Reveal>
@@ -462,16 +461,16 @@ function Testimonials() {
         {/* Perfectly Aligned Modern Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {items.map((it, i) => (
-            <Reveal 
-              key={it.who} 
-              delay={i * 100} 
+            <Reveal
+              key={it.who}
+              delay={i * 100}
               className="h-full flex"
             >
               <figure className="group relative w-full flex flex-col p-8 sm:p-10 rounded-3xl hairline bg-background hover:bg-surface/60 transition-colors duration-500 overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
-                
+
                 {/* Precision subtle hover edge */}
                 <div className="absolute inset-0 border-2 border-[var(--lime)]/0 group-hover:border-[var(--lime)]/20 rounded-3xl transition-colors duration-500 pointer-events-none" />
-                
+
                 <div className="relative z-10 flex-1 flex flex-col">
                   <div className="flex items-center gap-1.5 mb-8">
                     {[0, 1, 2, 3, 4].map((s) => (

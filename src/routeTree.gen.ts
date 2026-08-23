@@ -23,6 +23,7 @@ import { Route as AboutManifestoRouteImport } from './routes/about.manifesto'
 import { Route as AboutPressRouteImport } from './routes/about.press'
 import { Route as AboutStoryRouteImport } from './routes/about.story'
 import { Route as AboutValuesRouteImport } from './routes/about.values'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as JournalIndexRouteImport } from './routes/journal.index'
 import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 
@@ -96,6 +97,11 @@ const AboutValuesRoute = AboutValuesRouteImport.update({
   path: '/values',
   getParentRoute: () => AboutRoute,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalIndexRoute = JournalIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/about/values': typeof AboutValuesRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRoutesByTo {
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/about/values': typeof AboutValuesRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/about': typeof AboutIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/journal': typeof JournalIndexRoute
 }
 export interface FileRoutesById {
@@ -158,6 +166,7 @@ export interface FileRoutesById {
   '/about/values': typeof AboutValuesRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRouteTypes {
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/about/values'
     | '/journal/$slug'
     | '/about/'
+    | '/admin/'
     | '/journal/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/about/values'
     | '/journal/$slug'
     | '/about'
+    | '/admin'
     | '/journal'
   id:
     | '__root__'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/about/values'
     | '/journal/$slug'
     | '/about/'
+    | '/admin/'
     | '/journal/'
   fileRoutesById: FileRoutesById
 }
@@ -225,6 +237,7 @@ export interface RootRouteChildren {
   ProcessRoute: typeof ProcessRoute
   ServicesRoute: typeof ServicesRoute
   TeamRoute: typeof TeamRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -327,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutValuesRouteImport
       parentRoute: typeof AboutRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal/': {
       id: '/journal/'
       path: '/'
@@ -385,6 +405,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProcessRoute: ProcessRoute,
   ServicesRoute: ServicesRoute,
   TeamRoute: TeamRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

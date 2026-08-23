@@ -1,0 +1,84 @@
+// Prisma schema for Goom Engineering Studio (Supabase PostgreSQL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+}
+
+model JournalPost {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  excerpt   String
+  content   String   @db.Text
+  date      String   // E.g., "2026 · 05"
+  readTime  String   // E.g., "8 min"
+  tag       String   // Architecture, Realtime, Engineering, Process, Team, AI
+  featured  Boolean  @default(false)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamMember {
+  id         String   @id @default(uuid())
+  name       String
+  role       String   // E.g. "Co-Founder & Product Lead"
+  discipline String   // Product, Systems, Engineering, Innovation
+  focus      String   // E.g. "Product strategy · Backend"
+  bio        String   @db.Text
+  imgUrl     String   // Supabase Storage CDN URL or asset path
+  shipping   String   // E.g. "Company product strategy"
+  location   String   // E.g. "Addis Ababa"
+  tenure     String   // E.g. "Co-Founder"
+  signal     String   // E.g. "Architecture · APIs · AI products"
+  socials    Json     // { twitter?: string, github?: string, linkedin?: string }
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model JobOpening {
+  id         String   @id @default(uuid())
+  title      String   // E.g. "Senior Backend Engineer"
+  team       String   // Systems, Infrastructure, Realtime, Product, Delivery
+  location   String   // E.g. "Remote · Global"
+  type       String   // E.g. "Full-time"
+  about      String   @db.Text
+  bullets    Json     // String array of job requirements
+  skills     Json?    // String array of skills/technologies
+  niceToHave Json?    // String array of nice-to-have items
+  active     Boolean  @default(true)
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ContactInquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  company   String?
+  topic     String   // Embedded engineering, Architecture review, Zero-to-one build, Careers, Something else
+  brief     String   @db.Text
+  status    String   @default("UNREAD") // UNREAD, READ, ARCHIVED
+  createdAt DateTime @default(now())
+}
+
+model SiteSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}

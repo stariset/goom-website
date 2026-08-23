@@ -1,15 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, ArrowUpRight, Loader2 } from "lucide-react";
 import { PageHero } from "../components/site/SectionHeader";
 import { Reveal } from "../components/site/Reveal";
 import { SocialRow, type Social } from "../components/site/Socials";
 import { ClosingCTA } from "../components/site/ClosingCTA";
+import { supabase } from "../lib/supabase";
 import betheImg from "../assets/team-bethe.jpg";
 import bisratBImg from "../assets/team-bisrat-b.jpg";
 import bisratGImg from "../assets/team-bisrat-g.jpg";
 import abrehamImg from "../assets/team-abreham.jpg";
-// yordanos image temporarily hidden — card removed per request
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/team")({
 type Discipline = "All" | "Product" | "Systems" | "Engineering" | "Innovation";
 
 type Member = {
+  id?: string;
   name: string;
   role: string;
   focus: string;
@@ -39,8 +40,21 @@ type Member = {
   social: Social;
 };
 
-// Order: Bethe, Abreham Nigus, Bisrat Beriso, Bisrat Gulelat
-const team: Member[] = [
+function resolveTeamAvatar(imgUrl?: string, name?: string): string {
+  if (imgUrl && (imgUrl.startsWith("http://") || imgUrl.startsWith("https://") || imgUrl.startsWith("data:"))) {
+    return imgUrl;
+  }
+  const n = name?.toLowerCase() || "";
+  if (n.includes("bethe")) return betheImg;
+  if (n.includes("abreham")) return abrehamImg;
+  if (n.includes("beriso")) return bisratBImg;
+  if (n.includes("gulelat")) return bisratGImg;
+  if (imgUrl && !imgUrl.startsWith("/team-")) return imgUrl;
+  return "";
+}
+
+// Default fallback list
+const defaultTeam: Member[] = [
   {
     name: "Bethe Bayou",
     role: "Co-Founder & Product Lead",
@@ -97,12 +111,52 @@ const team: Member[] = [
 
 const disciplines: Discipline[] = ["All", "Product", "Systems", "Engineering", "Innovation"];
 
-
 function Team() {
   const [filter, setFilter] = useState<Discipline>("All");
+  const [teamMembers, setTeamMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadTeam() {
+      try {
+        const { data, error } = await supabase
+          .from("TeamMember")
+          .select("*")
+          .order("orderIndex", { ascending: true });
+
+        if (error) throw error;
+        if (data && data.length > 0) {
+          const mapped: Member[] = data.map((db: any) => ({
+            id: db.id,
+            name: db.name,
+            role: db.role,
+            discipline: (db.discipline as any) || "Product",
+            focus: db.focus || db.role,
+            bio: db.bio || "",
+            img: resolveTeamAvatar(db.imgUrl, db.name),
+            shipping: db.shipping || "Studio operations",
+            location: db.location || "Addis Ababa",
+            tenure: db.tenure || "Senior Engineer",
+            signal: db.signal || "Engineering",
+            social: db.socials || {},
+          }));
+          setTeamMembers(mapped);
+        } else {
+          setTeamMembers(defaultTeam);
+        }
+      } catch (err) {
+        console.warn("Error fetching TeamMembers from Supabase:", err);
+        setTeamMembers(defaultTeam);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadTeam();
+  }, []);
+
   const filtered = useMemo(
-    () => (filter === "All" ? team : team.filter((m) => m.discipline === filter)),
-    [filter],
+    () => (filter === "All" ? teamMembers : teamMembers.filter((m) => m.discipline === filter)),
+    [filter, teamMembers],
   );
 
   return (
@@ -119,46 +173,56 @@ function Team() {
 
       <section className="pb-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-mono text-[11px] text-muted-foreground mr-2">
-                FILTER · {String(filtered.length).padStart(2, "0")} / {String(team.length).padStart(2, "0")}
-              </span>
-              {disciplines.map((d) => {
-                const active = filter === d;
-                return (
-                  <button
-                    key={d}
-                    onClick={() => setFilter(d)}
-                    className={`rounded-full px-4 py-1.5 text-sm transition-all duration-300 ${
-                      active
-                        ? "bg-foreground text-background hairline border-transparent"
-                        : "hairline bg-background text-muted-foreground hover:text-foreground hover:-translate-y-0.5"
-                    }`}
-                  >
-                    {d}
-                  </button>
-                );
-              })}
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-24 space-y-4">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <p className="text-mono text-xs text-muted-foreground uppercase tracking-widest">
+                Fetching Studio Roster from Supabase...
+              </p>
             </div>
-            <div className="hidden sm:flex items-center gap-2 text-mono text-[10px] text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse-dot" />
-              ROSTER · LIVE · v2026.06
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-mono text-[11px] text-muted-foreground mr-2">
+                    FILTER · {String(filtered.length).padStart(2, "0")} / {String(teamMembers.length).padStart(2, "0")}
+                  </span>
+                  {disciplines.map((d) => {
+                    const active = filter === d;
+                    return (
+                      <button
+                        key={d}
+                        onClick={() => setFilter(d)}
+                        className={`rounded-full px-4 py-1.5 text-sm transition-all duration-300 ${active
+                            ? "bg-foreground text-background hairline border-transparent"
+                            : "hairline bg-background text-muted-foreground hover:text-foreground hover:-translate-y-0.5"
+                          }`}
+                      >
+                        {d}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="hidden sm:flex items-center gap-2 text-mono text-[10px] text-muted-foreground">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse-dot" />
+                  ROSTER · LIVE · v2026.06
+                </div>
+              </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((m) => (
-              <Reveal key={m.name} delay={team.indexOf(m) * 70}>
-                <TeamCard member={m} index={team.indexOf(m)} />
-              </Reveal>
-            ))}
-            {filter === "All" && (
-              <Reveal delay={filtered.length * 70}>
-                <JoinCard />
-              </Reveal>
-            )}
-          </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filtered.map((m, i) => (
+                  <Reveal key={m.id || m.name} delay={i * 70}>
+                    <TeamCard member={m} index={i} />
+                  </Reveal>
+                ))}
+                {filter === "All" && (
+                  <Reveal delay={filtered.length * 70}>
+                    <JoinCard />
+                  </Reveal>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </section>
       <ClosingCTA />
@@ -291,7 +355,7 @@ function JoinCard() {
         </span>
       </div>
       <div className="relative">
-        <div className="text-display text-[56px] sm:text-[68px] leading-[0.9]">Join the<br/><span className="italic">roster.</span></div>
+        <div className="text-display text-[56px] sm:text-[68px] leading-[0.9]">Join the<br /><span className="italic">roster.</span></div>
         <p className="mt-5 text-sm text-background/70 max-w-xs">
           We're always looking for senior engineers who'd rather ship than meet. Bring receipts.
         </p>

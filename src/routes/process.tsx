@@ -105,9 +105,8 @@ function Process() {
           {steps.map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
               <div
-                className={`rounded-3xl hairline p-8 sm:p-10 grid sm:grid-cols-[100px_1fr] gap-6 sm:gap-10 ${
-                  s.highlighted ? "bg-foreground text-background" : "bg-background"
-                }`}
+                className={`rounded-3xl hairline p-8 sm:p-10 grid sm:grid-cols-[100px_1fr] gap-6 sm:gap-10 ${s.highlighted ? "bg-foreground text-background" : "bg-background"
+                  }`}
               >
                 {/* Step number + duration */}
                 <div>
@@ -129,9 +128,8 @@ function Process() {
                     {s.deliverables.map((d) => (
                       <div key={d} className="flex items-start gap-2.5">
                         <CheckCircle2
-                          className={`h-4 w-4 mt-0.5 shrink-0 ${
-                            s.highlighted ? "text-[var(--lime)]" : "text-foreground/40"
-                          }`}
+                          className={`h-4 w-4 mt-0.5 shrink-0 ${s.highlighted ? "text-[var(--lime)]" : "text-foreground/40"
+                            }`}
                         />
                         <span className={`text-sm leading-snug ${s.highlighted ? "text-background/75" : "text-muted-foreground"}`}>
                           {d}

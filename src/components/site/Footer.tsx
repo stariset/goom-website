@@ -44,7 +44,6 @@ export function Footer() {
             links={[
               { label: "Team", to: "/team" },
               { label: "Careers", to: "/careers" },
-              { label: "Journal", to: "/journal" },
             ]}
           />
 

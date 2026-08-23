@@ -235,11 +235,10 @@ function Capabilities() {
                     {[4, 7, 5, 9, 8, 11, 7, 12, 10, 13, 12, 14, 13, 15].map((h, i, arr) => (
                       <div
                         key={i}
-                        className={`flex-1 rounded-t transition-colors ${
-                          i === arr.length - 1
+                        className={`flex-1 rounded-t transition-colors ${i === arr.length - 1
                             ? "bg-[var(--lime)]"
                             : "bg-background/25 hover:bg-background/40"
-                        }`}
+                          }`}
                         style={{ height: `${(h / 15) * 100}%` }}
                         title={`Week ${i + 1}: ${h} deploys`}
                       />
