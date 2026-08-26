@@ -32,6 +32,7 @@ import { Reveal } from "../components/site/Reveal";
 import { posts as staticPosts } from "../lib/journal-data";
 import { supabase } from "../lib/supabase";
 import { uploadAssetToSupabase } from "../lib/api-supabase";
+import { Skeleton } from "../components/ui/skeleton";
 import betheImg from "../assets/team-bethe.jpg";
 import bisratBImg from "../assets/team-bisrat-b.jpg";
 import bisratGImg from "../assets/team-bisrat-g.jpg";
@@ -96,6 +97,7 @@ function AdminDashboard() {
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [uploading, setUploading] = useState(false);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
+  const [loadingData, setLoadingData] = useState(true);
 
   // Job Editing Modal State
   const [editingJob, setEditingJob] = useState<any | null>(null);
@@ -173,6 +175,7 @@ function AdminDashboard() {
   // Load live data from Supabase
   useEffect(() => {
     async function loadData() {
+      setLoadingData(true);
       try {
         const { data: postsData } = await supabase.from("JournalPost").select("*");
         if (postsData && postsData.length > 0) {
@@ -196,6 +199,8 @@ function AdminDashboard() {
         }
       } catch (err) {
         console.warn("Supabase load:", err);
+      } finally {
+        setLoadingData(false);
       }
     }
     loadData();
@@ -477,16 +482,28 @@ function AdminDashboard() {
           {/* TAB 1: OVERVIEW */}
           {activeTab === "overview" && (
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              <StatCard title="Total Articles" value={String(journalPosts.length).padStart(2, "0")} label="Journal Posts" onClick={() => setActiveTab("journal")} />
-              <StatCard title="Team Members" value={String(teamMemberCount).padStart(2, "0")} label="Active Roster" onClick={() => setActiveTab("team")} />
-              <StatCard title="Open Roles" value={String(jobs.length).padStart(2, "0")} label="Career Listings" onClick={() => setActiveTab("careers")} />
-              <StatCard
-                title="Applicants & Briefs"
-                value={String(inquiries.length).padStart(2, "0")}
-                label={unseenInquiriesCount > 0 ? `${unseenInquiriesCount} UNSEEN SUBMISSIONS →` : "Inquiries →"}
-                onClick={() => setActiveTab("inquiries")}
-                highlight={unseenInquiriesCount > 0}
-              />
+              {loadingData ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="rounded-3xl hairline bg-background p-6 space-y-4">
+                    <Skeleton className="h-3 w-24 rounded-full" />
+                    <Skeleton className="h-14 w-20 rounded-2xl" />
+                    <Skeleton className="h-3 w-16 rounded-full" />
+                  </div>
+                ))
+              ) : (
+                <>
+                  <StatCard title="Total Articles" value={String(journalPosts.length).padStart(2, "0")} label="Journal Posts" onClick={() => setActiveTab("journal")} />
+                  <StatCard title="Team Members" value={String(teamMemberCount).padStart(2, "0")} label="Active Roster" onClick={() => setActiveTab("team")} />
+                  <StatCard title="Open Roles" value={String(jobs.length).padStart(2, "0")} label="Career Listings" onClick={() => setActiveTab("careers")} />
+                  <StatCard
+                    title="Applicants & Briefs"
+                    value={String(inquiries.length).padStart(2, "0")}
+                    label={unseenInquiriesCount > 0 ? `${unseenInquiriesCount} UNSEEN SUBMISSIONS →` : "Inquiries →"}
+                    onClick={() => setActiveTab("inquiries")}
+                    highlight={unseenInquiriesCount > 0}
+                  />
+                </>
+              )}
             </div>
           )}
 
@@ -613,7 +630,27 @@ function AdminDashboard() {
                   <span className="text-mono text-xs text-muted-foreground">Synced with Supabase</span>
                 </div>
 
-                {teamMembers.length === 0 ? (
+                {loadingData ? (
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="rounded-2xl hairline bg-surface/30 p-5 flex flex-col gap-4">
+                        <div className="flex items-start gap-3.5">
+                          <Skeleton className="h-12 w-12 rounded-full shrink-0" />
+                          <div className="flex-1 space-y-2">
+                            <Skeleton className="h-4 w-3/4 rounded-full" />
+                            <Skeleton className="h-3 w-1/2 rounded-full" />
+                            <Skeleton className="h-4 w-16 rounded-full" />
+                          </div>
+                        </div>
+                        <Skeleton className="h-8 w-full rounded-xl" />
+                        <div className="pt-3 border-t hairline flex items-center justify-between">
+                          <Skeleton className="h-3 w-20 rounded-full" />
+                          <Skeleton className="h-7 w-7 rounded-full" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : teamMembers.length === 0 ? (
                   <div className="p-8 text-center text-sm text-muted-foreground">
                     No team members found in database. Add your first team member below.
                   </div>
@@ -1208,9 +1245,29 @@ function AdminDashboard() {
 
                 {/* Roles List with Deactivate, Edit, Delete Actions */}
                 <div className="space-y-4">
-                  <div className="text-mono text-[11px] text-muted-foreground">MANAGE OPENINGS ({jobs.length})</div>
+                  <div className="text-mono text-[11px] text-muted-foreground">MANAGE OPENINGS ({loadingData ? "—" : jobs.length})</div>
                   <div className="space-y-3">
-                    {jobs.map((job: any, idx: number) => {
+                    {loadingData ? (
+                      Array.from({ length: 3 }).map((_, i) => (
+                        <div key={i} className="rounded-2xl hairline bg-background p-5 space-y-3">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="space-y-2 flex-1">
+                              <Skeleton className="h-3 w-32 rounded-full" />
+                              <Skeleton className="h-5 w-2/3 rounded-full" />
+                            </div>
+                            <div className="flex gap-2">
+                              <Skeleton className="h-8 w-8 rounded-full" />
+                              <Skeleton className="h-8 w-8 rounded-full" />
+                              <Skeleton className="h-8 w-8 rounded-full" />
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Skeleton className="h-5 w-16 rounded-full" />
+                            <Skeleton className="h-5 w-20 rounded-full" />
+                          </div>
+                        </div>
+                      ))
+                    ) : jobs.map((job: any, idx: number) => {
                       const isActive = job.active !== false;
                       return (
                         <div
@@ -1362,7 +1419,26 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              {filteredInquiries.length === 0 ? (
+              {loadingData ? (
+                <div className="space-y-4">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="rounded-3xl hairline bg-background p-6 sm:p-8 space-y-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b hairline pb-4">
+                        <div className="space-y-2">
+                          <Skeleton className="h-6 w-40 rounded-full" />
+                          <Skeleton className="h-3 w-52 rounded-full" />
+                        </div>
+                        <div className="flex gap-2">
+                          <Skeleton className="h-6 w-16 rounded-full" />
+                          <Skeleton className="h-8 w-8 rounded-full" />
+                        </div>
+                      </div>
+                      <Skeleton className="h-4 w-32 rounded-full" />
+                      <Skeleton className="h-16 w-full rounded-2xl" />
+                    </div>
+                  ))}
+                </div>
+              ) : filteredInquiries.length === 0 ? (
                 <div className="rounded-3xl hairline bg-background p-12 text-center text-muted-foreground space-y-2">
                   <Mail className="h-8 w-8 mx-auto text-muted-foreground/50" />
                   <p className="font-medium text-foreground">No submissions found in this category.</p>

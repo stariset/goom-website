@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState, useRef } from "react";
-import { ArrowRight, Quote, Star, ArrowUpRight, Code2, Layers, Cpu, Shield, Sparkles, Activity } from "lucide-react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { ArrowRight, Quote, Star, ArrowUpRight, Code2, Layers, Cpu, Shield, Sparkles, Activity, ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionHeader } from "../components/site/SectionHeader";
 import { Reveal } from "../components/site/Reveal";
 import { LogoMark } from "../components/site/Brand";
@@ -438,15 +438,78 @@ function Testimonials() {
       where: "Enterprise SaaS",
       initials: "HP",
     },
+    {
+      quote:
+        "We handed them a vague brief on a Monday. By Friday they had a working prototype we could demo to investors.",
+      who: "CEO",
+      where: "Early-stage AI startup",
+      initials: "CE",
+    },
+    {
+      quote:
+        "Our previous vendor took eight months and shipped something we couldn't maintain. Goom did the same scope in ten weeks and left us full documentation.",
+      who: "CTO",
+      where: "Healthcare data platform",
+      initials: "CT",
+    },
   ];
 
-  return (
-    <section className="relative py-24 sm:py-32 lg:py-40 border-y hairline overflow-hidden bg-surface/30">
+  const [active, setActive] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const total = items.length;
 
-      {/* Centered Header */}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mb-16 sm:mb-24 flex flex-col items-center text-center">
+  const next = useCallback(() => setActive((a) => (a + 1) % total), [total]);
+  const prev = useCallback(() => setActive((a) => (a - 1 + total) % total), [total]);
+  const goTo = useCallback((i: number) => setActive(i), []);
+
+  // Auto-play
+  useEffect(() => {
+    if (isHovered || isDragging) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+    timerRef.current = setInterval(next, 5500);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [isHovered, isDragging, next]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [next, prev]);
+
+  // Touch / drag
+  const handleDragStart = (clientX: number) => {
+    setIsDragging(true);
+    setDragStart(clientX);
+  };
+  const handleDragEnd = (clientX: number) => {
+    setIsDragging(false);
+    const delta = dragStart - clientX;
+    if (Math.abs(delta) > 50) delta > 0 ? next() : prev();
+  };
+
+  return (
+    <section
+      className="relative py-20 sm:py-28 border-y hairline overflow-hidden"
+      aria-label="Client testimonials"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Background */}
+      <div className="absolute inset-0 bg-surface/20 pointer-events-none" />
+
+      {/* Header */}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mb-12 sm:mb-16 flex flex-col items-center text-center">
         <Reveal>
-          <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex items-center justify-center gap-4 mb-6">
             <div className="h-px w-6 sm:w-12 bg-border/60" />
             <div className="text-mono text-[10px] text-muted-foreground tracking-widest uppercase">02 — In their words</div>
             <div className="h-px w-6 sm:w-12 bg-border/60" />
@@ -457,49 +520,93 @@ function Testimonials() {
         </Reveal>
       </div>
 
+      {/* Track wrapper */}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        {/* Perfectly Aligned Modern Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-          {items.map((it, i) => (
-            <Reveal
-              key={it.who}
-              delay={i * 100}
-              className="h-full flex"
-            >
-              <figure className="group relative w-full flex flex-col p-8 sm:p-10 rounded-3xl hairline bg-background hover:bg-surface/60 transition-colors duration-500 overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
 
-                {/* Precision subtle hover edge */}
-                <div className="absolute inset-0 border-2 border-[var(--lime)]/0 group-hover:border-[var(--lime)]/20 rounded-3xl transition-colors duration-500 pointer-events-none" />
-
-                <div className="relative z-10 flex-1 flex flex-col">
-                  <div className="flex items-center gap-1.5 mb-8">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} className="h-4 w-4 fill-foreground/90 text-foreground/90" />
+        {/* Overflow clip + drag zone */}
+        <div
+          className="overflow-hidden"
+          onMouseDown={(e) => handleDragStart(e.clientX)}
+          onMouseUp={(e) => handleDragEnd(e.clientX)}
+          onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+          onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientX)}
+          style={{ cursor: isDragging ? "grabbing" : "grab", userSelect: "none" }}
+        >
+          {/* Sliding track — 1 card mobile, 3 on lg */}
+          <div
+            className="flex gap-5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{ transform: `translateX(calc(-${active} * (100% / 3 + 20px / 3)))` }}
+          >
+            {items.map((it, i) => {
+              const isActive = i === active;
+              return (
+                <figure
+                  key={i}
+                  className="relative flex-none w-full lg:w-[calc(33.333%-14px)] rounded-2xl p-6 sm:p-8 hairline bg-background overflow-hidden shadow-[0_2px_12px_-4px_rgba(0,0,0,0.07)]"
+                >
+                  {/* Stars */}
+                  <div className="flex items-center gap-1 mb-5">
+                    {[0,1,2,3,4].map((s) => (
+                      <Star key={s} className="h-3.5 w-3.5 fill-foreground/80 text-foreground/80" />
                     ))}
                   </div>
-                  <blockquote className="text-xl sm:text-2xl leading-[1.45] tracking-tight text-foreground/90 font-medium">
+
+                  {/* Quote */}
+                  <blockquote className="text-base leading-[1.6] tracking-tight font-medium text-foreground/90 mb-6">
                     "{it.quote}"
                   </blockquote>
-                </div>
 
-                <figcaption className="relative z-10 mt-12 pt-8 border-t hairline flex items-center gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-foreground text-background text-mono text-[11px] font-bold tracking-widest shadow-sm">
-                    {it.initials}
-                  </span>
-                  <div>
-                    <span className="block text-sm font-bold text-foreground">{it.who}</span>
-                    <span className="block text-mono text-[10px] tracking-widest text-muted-foreground mt-1 uppercase">
-                      {it.where}
+                  {/* Footer */}
+                  <figcaption className="pt-5 border-t hairline flex items-center gap-3">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-foreground text-background text-mono text-[10px] font-bold tracking-widest">
+                      {it.initials}
                     </span>
-                  </div>
-                </figcaption>
-              </figure>
-            </Reveal>
+                    <div>
+                      <span className="block text-xs font-bold text-foreground">{it.who}</span>
+                      <span className="block text-mono text-[9px] tracking-widest text-muted-foreground mt-0.5 uppercase">
+                        {it.where}
+                      </span>
+                    </div>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Dots only */}
+        <div className="mt-8 flex items-center justify-center gap-2" role="tablist" aria-label="Testimonial navigation">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              role="tab"
+              aria-selected={i === active}
+              aria-label={`Go to testimonial ${i + 1}`}
+              onClick={() => goTo(i)}
+              className="relative flex items-center justify-center transition-all duration-300 focus:outline-none"
+              style={{ width: i === active ? "24px" : "8px", height: "8px" }}
+            >
+              <span
+                className="absolute inset-0 rounded-full transition-all duration-300"
+                style={{
+                  background: i === active ? "var(--lime)" : "var(--border)",
+                  opacity: i === active ? 1 : 0.5,
+                }}
+              />
+            </button>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes testimonialIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </section>
   );
 }
+
 
 

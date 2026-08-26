@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { ArrowUpRight, Plus, Loader2 } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import { PageHero } from "../components/site/SectionHeader";
 import { fetchJobOpenings, type JobOpeningData } from "../lib/api-supabase";
+import { Skeleton } from "../components/ui/skeleton";
 
 // Helper to render markdown bold (**), italic (*), code (`) safely in JSX
 function renderMarkdownText(text: string) {
@@ -67,15 +68,25 @@ function Careers() {
       <section className="pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="text-mono text-[11px] text-muted-foreground mb-6 uppercase tracking-wider">
-            OPEN ROLES · {loading ? "..." : roles.length}
+            OPEN ROLES · {loading ? "—" : roles.length}
           </div>
 
           {loading ? (
-            <div className="rounded-3xl hairline bg-background p-16 text-center flex flex-col items-center justify-center gap-3">
-              <Loader2 className="h-6 w-6 animate-spin text-[var(--lime)]" />
-              <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-                Fetching Open Engineering Positions...
-              </span>
+            <div className="rounded-3xl hairline bg-background overflow-hidden divide-y hairline">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-[1fr_auto] sm:grid-cols-[2fr_1fr_1fr_auto] items-center gap-6 p-6 sm:p-8"
+                >
+                  <div className="space-y-2">
+                    <Skeleton className="h-8 w-3/4 rounded-xl" />
+                    <Skeleton className="h-3 w-1/3 rounded-full" />
+                  </div>
+                  <Skeleton className="hidden sm:block h-4 w-20 rounded-full" />
+                  <Skeleton className="hidden sm:block h-4 w-16 rounded-full" />
+                  <Skeleton className="h-10 w-10 rounded-full shrink-0" />
+                </div>
+              ))}
             </div>
           ) : roles.length === 0 ? (
             <div className="rounded-3xl hairline bg-background p-12 text-center text-muted-foreground text-sm">

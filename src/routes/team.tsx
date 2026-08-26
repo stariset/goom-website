@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, ArrowUpRight, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PageHero } from "../components/site/SectionHeader";
 import { Reveal } from "../components/site/Reveal";
 import { SocialRow, type Social } from "../components/site/Socials";
 import { ClosingCTA } from "../components/site/ClosingCTA";
 import { supabase } from "../lib/supabase";
+import { Skeleton } from "../components/ui/skeleton";
 import betheImg from "../assets/team-bethe.jpg";
 import bisratBImg from "../assets/team-bisrat-b.jpg";
 import bisratGImg from "../assets/team-bisrat-g.jpg";
@@ -174,11 +175,29 @@ function Team() {
       <section className="pb-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-24 space-y-4">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-              <p className="text-mono text-xs text-muted-foreground uppercase tracking-widest">
-                Fetching Studio Roster from Supabase...
-              </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-[28px] overflow-hidden bg-background hairline"
+                >
+                  {/* Photo area */}
+                  <div className="m-3 mb-0 rounded-[20px] overflow-hidden">
+                    <Skeleton className="aspect-[4/5] w-full rounded-[20px]" />
+                  </div>
+                  {/* Footer strip */}
+                  <div className="p-5 pt-4 flex items-center justify-between gap-4">
+                    <div className="space-y-2 flex-1">
+                      <Skeleton className="h-3 w-12 rounded-full" />
+                      <Skeleton className="h-4 w-2/3 rounded-full" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Skeleton className="h-7 w-7 rounded-full" />
+                      <Skeleton className="h-7 w-7 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <>
