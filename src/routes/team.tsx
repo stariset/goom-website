@@ -120,6 +120,11 @@ function Team() {
   useEffect(() => {
     async function loadTeam() {
       try {
+        if (!supabase) {
+          setTeamMembers(defaultTeam);
+          setLoading(false);
+          return;
+        }
         const { data, error } = await supabase
           .from("TeamMember")
           .select("*")
