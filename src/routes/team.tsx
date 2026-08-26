@@ -175,25 +175,25 @@ function Team() {
       <section className="pb-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           {loading ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-[28px] overflow-hidden bg-background hairline"
+                  className="rounded-[22px] overflow-hidden bg-background hairline"
                 >
                   {/* Photo area */}
-                  <div className="m-3 mb-0 rounded-[20px] overflow-hidden">
-                    <Skeleton className="aspect-[4/5] w-full rounded-[20px]" />
+                  <div className="m-2.5 mb-0 rounded-[16px] overflow-hidden">
+                    <Skeleton className="aspect-[3/4] w-full rounded-[16px]" />
                   </div>
                   {/* Footer strip */}
-                  <div className="p-5 pt-4 flex items-center justify-between gap-4">
-                    <div className="space-y-2 flex-1">
-                      <Skeleton className="h-3 w-12 rounded-full" />
-                      <Skeleton className="h-4 w-2/3 rounded-full" />
+                  <div className="p-4 pt-3 flex items-center justify-between gap-3">
+                    <div className="space-y-1.5 flex-1">
+                      <Skeleton className="h-2.5 w-10 rounded-full" />
+                      <Skeleton className="h-3.5 w-2/3 rounded-full" />
                     </div>
-                    <div className="flex gap-2">
-                      <Skeleton className="h-7 w-7 rounded-full" />
-                      <Skeleton className="h-7 w-7 rounded-full" />
+                    <div className="flex gap-1.5">
+                      <Skeleton className="h-6 w-6 rounded-full" />
+                      <Skeleton className="h-6 w-6 rounded-full" />
                     </div>
                   </div>
                 </div>
@@ -213,8 +213,8 @@ function Team() {
                         key={d}
                         onClick={() => setFilter(d)}
                         className={`rounded-full px-4 py-1.5 text-sm transition-all duration-300 ${active
-                            ? "bg-foreground text-background hairline border-transparent"
-                            : "hairline bg-background text-muted-foreground hover:text-foreground hover:-translate-y-0.5"
+                          ? "bg-foreground text-background hairline border-transparent"
+                          : "hairline bg-background text-muted-foreground hover:text-foreground hover:-translate-y-0.5"
                           }`}
                       >
                         {d}
@@ -228,18 +228,19 @@ function Team() {
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filtered.map((m, i) => (
                   <Reveal key={m.id || m.name} delay={i * 70}>
                     <TeamCard member={m} index={i} />
                   </Reveal>
                 ))}
-                {filter === "All" && (
-                  <Reveal delay={filtered.length * 70}>
-                    <JoinCard />
-                  </Reveal>
-                )}
               </div>
+
+              {filter === "All" && (
+                <Reveal delay={filtered.length * 70} className="mt-4">
+                  <JoinCard />
+                </Reveal>
+              )}
             </>
           )}
         </div>
@@ -252,15 +253,15 @@ function Team() {
 function TeamCard({ member, index }: { member: Member; index: number }) {
   const idx = String(index + 1).padStart(2, "0");
   return (
-    <article className="group relative rounded-[28px] overflow-hidden bg-background hairline transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_40px_80px_-40px_rgba(0,0,0,0.35)]">
+    <article className="group relative rounded-[22px] overflow-hidden bg-background hairline transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.3)]">
       {/* Corner registration marks — editorial dossier feel */}
-      <CornerMark className="top-3 left-3" />
-      <CornerMark className="top-3 right-3 rotate-90" />
-      <CornerMark className="bottom-3 left-3 -rotate-90" />
-      <CornerMark className="bottom-3 right-3 rotate-180" />
+      <CornerMark className="top-2.5 left-2.5" />
+      <CornerMark className="top-2.5 right-2.5 rotate-90" />
+      <CornerMark className="bottom-2.5 left-2.5 -rotate-90" />
+      <CornerMark className="bottom-2.5 right-2.5 rotate-180" />
 
       {/* Photo plate */}
-      <div className="relative m-3 mb-0 rounded-[20px] overflow-hidden aspect-[4/5] bg-surface">
+      <div className="relative m-2.5 mb-0 rounded-[16px] overflow-hidden aspect-[3/4] bg-surface">
         <img
           src={member.img}
           alt={`${member.name} — ${member.role} at Goom`}
@@ -271,9 +272,9 @@ function TeamCard({ member, index }: { member: Member; index: number }) {
         />
 
         {/* Top meta strip */}
-        <div className="absolute top-0 inset-x-0 p-4 flex items-start justify-between text-mono text-[10px] text-background mix-blend-difference">
+        <div className="absolute top-0 inset-x-0 p-3 flex items-start justify-between text-mono text-[9px] text-background mix-blend-difference">
           <div className="flex flex-col gap-1">
-            <span className="opacity-90">STARISE / TEAM</span>
+            <span className="opacity-90">GOOM / TEAM</span>
             <span className="opacity-60">FILE №{idx}</span>
           </div>
           <span className="rounded-full bg-background/15 backdrop-blur-md px-2.5 py-1 text-background mix-blend-normal hairline border-background/20">
@@ -284,35 +285,35 @@ function TeamCard({ member, index }: { member: Member; index: number }) {
         {/* Giant numeral watermark — desktop only, can crowd mobile */}
         <span
           aria-hidden
-          className="hidden sm:block pointer-events-none absolute -bottom-6 -right-2 text-display text-[180px] leading-none text-background/10 select-none transition-all duration-700 group-hover:text-background/20 group-hover:-translate-y-1"
+          className="hidden sm:block pointer-events-none absolute -bottom-4 -right-1 text-display text-[120px] leading-none text-background/10 select-none transition-all duration-700 group-hover:text-background/20 group-hover:-translate-y-1"
         >
           {idx}
         </span>
 
         {/* Bottom gradient + name plate */}
-        <div className="absolute inset-x-0 bottom-0 p-5 pt-24 bg-gradient-to-t from-foreground/95 via-foreground/55 to-transparent text-background">
-          <div className="flex items-center gap-2 text-mono text-[10px] text-background/70">
+        <div className="absolute inset-x-0 bottom-0 p-4 pt-16 bg-gradient-to-t from-foreground/95 via-foreground/55 to-transparent text-background">
+          <div className="flex items-center gap-2 text-mono text-[9px] text-background/70">
             <span className="h-1 w-1 rounded-full lime-chip" />
             NOW SHIPPING · {member.shipping.toUpperCase()}
           </div>
-          <h4 className="mt-2 text-display text-[30px] sm:text-[34px] leading-[0.95] tracking-tight">{member.name}</h4>
-          <div className="mt-1 text-sm text-background/80">{member.role}</div>
+          <h4 className="mt-1.5 text-display text-[22px] sm:text-[25px] leading-[0.95] tracking-tight">{member.name}</h4>
+          <div className="mt-0.5 text-xs text-background/80">{member.role}</div>
         </div>
 
         {/* Bio reveal overlay — hover on desktop, hidden on mobile (bio rendered below instead) */}
-        <div className="hidden sm:flex absolute inset-0 bg-foreground/92 text-background p-6 flex-col opacity-0 translate-y-3 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-          <div className="text-mono text-[10px] text-background/60 flex items-center justify-between">
+        <div className="hidden sm:flex absolute inset-0 bg-foreground/92 text-background p-5 flex-col opacity-0 translate-y-3 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+          <div className="text-mono text-[9px] text-background/60 flex items-center justify-between">
             <span>DOSSIER · №{idx}</span>
             <span>{member.tenure.toUpperCase()}</span>
           </div>
-          <h5 className="mt-4 text-display text-3xl leading-tight">{member.name}</h5>
-          <div className="mt-1 text-sm text-background/70">{member.role} — {member.focus}</div>
-          <p className="mt-5 text-[15px] leading-relaxed text-background/85">{member.bio}</p>
-          <div className="mt-auto pt-6 grid grid-cols-2 gap-4 border-t border-background/15">
+          <h5 className="mt-3 text-display text-2xl leading-tight">{member.name}</h5>
+          <div className="mt-0.5 text-xs text-background/70">{member.role} — {member.focus}</div>
+          <p className="mt-4 text-[13px] leading-relaxed text-background/85">{member.bio}</p>
+          <div className="mt-auto pt-4 grid grid-cols-2 gap-3 border-t border-background/15">
             <Meta k="Based in" v={member.location} />
             <Meta k="Focus" v={member.focus} />
           </div>
-          <div className="mt-5 text-mono text-[10px] text-background/50">{member.signal.toUpperCase()}</div>
+          <div className="mt-3 text-mono text-[9px] text-background/50">{member.signal.toUpperCase()}</div>
         </div>
       </div>
 
@@ -328,10 +329,10 @@ function TeamCard({ member, index }: { member: Member; index: number }) {
 
 
       {/* Footer strip — always visible */}
-      <div className="p-5 pt-4 flex items-center justify-between gap-4">
+      <div className="p-4 pt-3 flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-mono text-[10px] text-muted-foreground">FOCUS</div>
-          <div className="mt-1 text-sm font-medium truncate">{member.focus}</div>
+          <div className="text-mono text-[9px] text-muted-foreground">FOCUS</div>
+          <div className="mt-0.5 text-xs font-medium truncate">{member.focus}</div>
         </div>
         <div className="shrink-0">
           <SocialRow links={member.social} />
@@ -365,38 +366,57 @@ function CornerMark({ className = "" }: { className?: string }) {
 
 function JoinCard() {
   return (
-    <article className="relative rounded-[28px] hairline p-6 sm:p-8 bg-foreground text-background overflow-hidden flex flex-col justify-between gap-8 min-h-[440px] sm:min-h-[560px] group">
-      <div className="flex items-center justify-between text-mono text-[10px] text-background/60">
-        <span>OPEN ROLES · 2026</span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full lime-chip animate-pulse-dot" />
-          HIRING
-        </span>
-      </div>
-      <div className="relative">
-        <div className="text-display text-[56px] sm:text-[68px] leading-[0.9]">Join the<br /><span className="italic">roster.</span></div>
-        <p className="mt-5 text-sm text-background/70 max-w-xs">
-          We're always looking for senior engineers who'd rather ship than meet. Bring receipts.
-        </p>
-        <Link
-          to="/careers"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-background text-foreground px-5 py-3 text-sm font-medium hover:gap-3 transition-all"
-        >
-          See positions <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-      <div className="grid grid-cols-2 gap-4 text-mono text-[10px] text-background/60 border-t border-background/10 pt-5 relative">
-        <div>
-          <div className="opacity-60">OPEN</div>
-          <div className="mt-1 text-display text-2xl text-background">04</div>
+    <article className="relative rounded-[22px] hairline bg-foreground text-background overflow-hidden group">
+      {/* Lime glow blob */}
+      <span className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-[var(--lime)] opacity-20 blur-3xl animate-float group-hover:opacity-40 transition-opacity duration-700" />
+      <span className="pointer-events-none absolute -top-16 left-1/3 h-48 w-48 rounded-full bg-[var(--lime)] opacity-10 blur-3xl" />
+
+      <div className="relative flex flex-col sm:flex-row items-center justify-between gap-8 p-7 sm:p-10">
+
+        {/* Left — headline */}
+        <div className="shrink-0">
+          <div className="text-mono text-[10px] text-background/50 flex items-center gap-2 mb-3">
+            <span className="h-1.5 w-1.5 rounded-full lime-chip animate-pulse-dot" />
+            OPEN ROLES · 2026
+          </div>
+          <div className="text-display text-[40px] sm:text-[52px] leading-[0.9]">
+            Join the
+            <br />
+            <span className="italic">roster.</span>
+          </div>
         </div>
-        <div>
-          <div className="opacity-60">CONTINENTS</div>
-          <div className="mt-1 text-display text-2xl text-background">04</div>
+
+        {/* Center divider + stats */}
+        <div className="hidden sm:flex items-center gap-10 shrink-0 border-x border-background/10 px-10">
+          <div className="text-center">
+            <div className="text-display text-4xl">Remote</div>
+            <div className="mt-1 text-mono text-[9px] text-background/50 uppercase tracking-widest">Work from anywhere</div>
+          </div>
+          <div className="text-center">
+            <div className="text-display text-4xl">Hybrid</div>
+            <div className="mt-1 text-mono text-[9px] text-background/50 uppercase tracking-widest">Flexible schedule</div>
+          </div>
+          <div className="text-center">
+            <div className="text-display text-4xl">Full-time</div>
+            <div className="mt-1 text-mono text-[9px] text-background/50 uppercase tracking-widest">Dedicated roles</div>
+          </div>
+        </div>
+
+        {/* Right — body + CTA */}
+        <div className="flex flex-col gap-5 max-w-xs">
+          <p className="text-sm text-background/65 leading-relaxed">
+            We're always looking for senior engineers who'd rather ship than meet. No bureaucracy. Real ownership.
+          </p>
+          <Link
+            to="/careers"
+            className="self-start inline-flex items-center gap-2 rounded-full bg-background text-foreground px-6 py-3 text-sm font-medium hover:gap-3 transition-all duration-300"
+          >
+            See open positions <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
-      <span className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-[var(--lime)] opacity-25 blur-3xl animate-float group-hover:opacity-45 transition-opacity duration-700" />
-      <ArrowUpRight className="absolute top-6 right-6 h-5 w-5 opacity-40 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+
+      <ArrowUpRight className="absolute top-6 right-6 h-4 w-4 opacity-30 group-hover:opacity-80 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
     </article>
   );
 }
