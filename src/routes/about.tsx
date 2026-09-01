@@ -5,9 +5,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About — Goom" },
-      { name: "description", content: "Goom — a premier engineering studio and product company. Story, values, manifesto, and press." },
+      { name: "description", content: "Goom — a small engineering studio founded in 2025. Story, values, and manifesto." },
       { property: "og:title", content: "About — Goom" },
-      { property: "og:description", content: "A studio. A product company. Both, on purpose." },
+      { property: "og:description", content: "Four engineers. One standard. Built to last." },
     ],
   }),
   component: AboutLayout,
@@ -18,7 +18,6 @@ const tabs = [
   { to: "/about/story", label: "Story" },
   { to: "/about/values", label: "Values" },
   { to: "/about/manifesto", label: "Manifesto" },
-  { to: "/about/press", label: "Press" },
 ] as const;
 
 function AboutLayout() {
@@ -33,18 +32,18 @@ function AboutLayout() {
           <div className="flex items-center gap-4 text-mono text-[11px] text-muted-foreground">
             <span>ABOUT · GOOM</span>
             <span className="h-px w-6 bg-border" />
-            <span>EST. 2024 · ADDIS ABABA</span>
+            <span>EST. 2025 · ADDIS ABABA</span>
           </div>
 
           {/* Split headline layout */}
           <div className="mt-8 grid lg:grid-cols-[1fr_0.55fr] gap-8 lg:gap-16 items-end pb-12 sm:pb-16">
             <h1 className="text-display text-4xl sm:text-5xl lg:text-6xl leading-[0.97]">
-              A studio.<br />
-              <span className="italic">A product company.</span><br />
-              Both, on purpose.
+              Four engineers.<br />
+              <span className="italic">One standard.</span><br />
+              Built to last.
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-sm">
-              An engineering studio built on one belief: the best software companies are the ones that ship for themselves first.
+              A small engineering studio, founded in 2025. We take on the hard problems and stay until the systems run quietly — then hand them over for good.
             </p>
           </div>
         </div>

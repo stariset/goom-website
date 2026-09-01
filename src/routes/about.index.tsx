@@ -24,14 +24,14 @@ function AboutOverview() {
             <Reveal>
               <div className="text-mono text-[10px] text-muted-foreground tracking-widest mb-6">WHO WE ARE</div>
               <p className="text-display text-2xl sm:text-3xl leading-[1.2]">
-                We build software that companies run on — not prototypes, not MVPs.
+                We are four engineers who build software that companies run on.
                 Systems designed to be <span className="italic">inherited</span>,
-                not rewritten. Infrastructure that holds at 3am without someone holding it.
+                not rewritten. Infrastructure that holds at 3am without anyone holding it.
               </p>
             </Reveal>
             <Reveal delay={80}>
               <p className="text-base text-muted-foreground leading-relaxed">
-                A small engineering studio. We take on the hard parts and stay until they run quietly — then hand over systems the client can own indefinitely.
+                Founded in 2025 in Addis Ababa. We take on the hard parts and stay until they run quietly — then hand over systems the client can own indefinitely.
               </p>
             </Reveal>
           </div>
@@ -44,28 +44,28 @@ function AboutOverview() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               {
-                icon: <Package className="h-5 w-5" />,
-                v: "2",
-                k: "Live SaaS products",
-                sub: "Built and operated internally",
-              },
-              {
                 icon: <Users className="h-5 w-5" />,
-                v: "12+",
-                k: "Senior engineers",
-                sub: "No juniors. No exceptions.",
+                v: "4",
+                k: "Engineers",
+                sub: "Small team. High ownership.",
               },
               {
                 icon: <Globe className="h-5 w-5" />,
-                v: "4",
-                k: "Continents active",
-                sub: "Clients across 3 time zones",
+                v: "3+",
+                k: "Continents served",
+                sub: "Clients across multiple time zones",
+              },
+              {
+                icon: <Package className="h-5 w-5" />,
+                v: "2+",
+                k: "SaaS products in progress",
+                sub: "Building internally. Not launched yet.",
               },
               {
                 icon: <Zap className="h-5 w-5" />,
-                v: "<40ms",
-                k: "Avg. p95 latency",
-                sub: "Measured in production",
+                v: "2025",
+                k: "Founded",
+                sub: "Addis Ababa, Ethiopia",
               },
             ].map((s, i) => (
               <Reveal key={s.k} delay={i * 60}>
@@ -136,16 +136,16 @@ function AboutOverview() {
             <div className="flex items-center justify-between mb-12">
               <div className="text-mono text-[10px] text-muted-foreground tracking-widest">TIMELINE</div>
               <div className="h-px flex-1 mx-6 bg-border" />
-              <div className="text-mono text-[10px] text-muted-foreground">2023 → NOW</div>
+              <div className="text-mono text-[10px] text-muted-foreground">2025 → NOW</div>
             </div>
           </Reveal>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { y: "2023", t: "Before Goom", b: "Four engineers across two continents, solving the same class of problems for different employers." },
-              { y: "2024", t: "Studio opens", b: "Goom founded in Addis Ababa. One rule: every engineer must have shipped real production systems." },
-              { y: "2025", t: "Compounding", b: "First long-horizon retainer. A ledger rebuilt on event sourcing. A dispatch system under 400ms." },
-              { y: "2026", t: "Now", b: "Fewer, deeper engagements. Realtime systems practice. Engineering that compounds." },
+              { y: "2023–24", t: "Before Goom", b: "Four engineers, scattered across different companies, kept solving the same class of problems. The pattern was clear before the company was." },
+              { y: "2025", t: "Studio opens", b: "Goom founded in Addis Ababa. A team of four SWEs. One rule: everything we ship must hold in production without us babysitting it." },
+              { y: "2025", t: "First clients", b: "Early engagements across multiple continents. Word spreads quietly — not through marketing, through the work itself." },
+              { y: "Now", t: "Building deeper", b: "Active client engagements. SaaS products in development. Engineering that compounds with every project." },
             ].map((e, i) => (
               <Reveal key={i} delay={i * 70}>
                 <div className="group bg-background rounded-xl hairline p-6 sm:p-8 min-h-[200px] flex flex-col justify-between hover:bg-surface transition-colors">

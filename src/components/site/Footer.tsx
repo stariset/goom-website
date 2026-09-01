@@ -54,7 +54,6 @@ export function Footer() {
               { label: "Story", to: "/about/story" },
               { label: "Values", to: "/about/values" },
               { label: "Manifesto", to: "/about/manifesto" },
-              { label: "Press", to: "/about/press" },
             ]}
           />
           <FooterCol

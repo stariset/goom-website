@@ -68,7 +68,7 @@ function Manifesto() {
                 "The fastest way to ship is to refuse to ship anything you wouldn't put your name on."
               </p>
               <div className="mt-6 text-mono text-[10px] text-muted-foreground tracking-widest uppercase">
-                — The Team · Goom
+                — Four Engineers · Goom, 2025
               </div>
             </div>
           </Reveal>

@@ -85,12 +85,7 @@ const mobileSections = [
         description: "What we owe the work.",
         icon: <Sparkles className="h-4 w-4" />,
       },
-      {
-        to: "/about/press",
-        label: "Press",
-        description: "Mentions, assets, and inquiries.",
-        icon: <Newspaper className="h-4 w-4" />,
-      },
+
     ],
   },
   {
@@ -250,12 +245,6 @@ export function Nav() {
                   {
                     heading: "Public",
                     items: [
-                      {
-                        to: "/about/press",
-                        label: "Press",
-                        description: "Mentions, assets, inquiries.",
-                        icon: <Newspaper className="h-4 w-4" />,
-                      },
                       {
                         to: "/team",
                         label: "Team",

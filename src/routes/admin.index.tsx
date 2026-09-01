@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import bcrypt from "bcryptjs";
 import { useState, useEffect } from "react";
 import {
   FileText,
@@ -139,14 +140,17 @@ function AdminDashboard() {
     signal: "",
   });
 
-  // Handle Passcode Login
+  // Handle Passcode Login — compares against bcrypt hash from .env (VITE_ADMIN_PASSWORD_HASH)
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoggingIn(true);
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    const hash = import.meta.env.VITE_ADMIN_PASSWORD_HASH as string | undefined;
+    let valid = false;
+    if (hash && passcode) {
+      valid = await bcrypt.compare(passcode, hash);
+    }
     setLoggingIn(false);
-
-    if (passcode === "goom2026" || passcode === "admin") {
+    if (valid) {
       setAuthenticated(true);
       setAuthError(false);
     } else {
@@ -413,12 +417,12 @@ function AdminDashboard() {
               <label className="text-mono text-[10px] uppercase tracking-wider text-muted-foreground">Passcode</label>
               <input
                 type="password"
-                placeholder="Enter passcode (default: goom2026)"
+                placeholder="Enter studio passcode"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
                 className="mt-2 w-full rounded-2xl border border-foreground/15 bg-surface/50 px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all"
               />
-              {authError && <p className="mt-2 text-xs text-rose-500">Invalid passcode. Try 'goom2026'</p>}
+              {authError && <p className="mt-2 text-xs text-rose-500">Invalid passcode. Please try again.</p>}
             </div>
             <button
               type="submit"

@@ -14,34 +14,24 @@ export const Route = createFileRoute("/about/story")({
 
 const chapters = [
   {
-    y: "2023",
+    y: "2023–24",
     t: "Before Goom",
-    body: "Four engineers, scattered across two continents, kept solving the same class of problems for different employers. The pattern was obvious; the company was not yet.",
+    body: "Four engineers, working across different companies and continents, kept running into the same class of problems. Bad architecture, bloated teams, and software that couldn't survive the people who built it. The pattern was obvious before the company was.",
   },
   {
-    y: "2024",
+    y: "2025",
     t: "Founded in Addis Ababa",
-    body: "Goom — a software engineering studio — opens with one rule: every engineer in the door must have shipped real production systems. No exceptions.",
-  },
-  {
-    y: "2024",
-    t: "First enterprise build",
-    body: "A six-week sprint replaces a six-month roadmap for an enterprise client. Word of mouth begins.",
+    body: "Goom opens — a software engineering studio of four. One rule from day one: everything we ship must hold in production without us holding it. No juniors. No exceptions. Four engineers, full ownership.",
   },
   {
     y: "2025",
-    t: "A ledger, rebuilt",
-    body: "A client accounting core is rebuilt on event sourcing — correctness first, performance close behind. It still runs today.",
-  },
-  {
-    y: "2025",
-    t: "Realtime practice",
-    body: "A live dispatch system for a transport operator: sub-second allocation across active fleets, built on the same primitives.",
+    t: "First engagements",
+    body: "Early client work across multiple continents. Not loud, not marketed heavily — the work did the talking. Each project deepened the playbook for the next.",
   },
   {
     y: "Now",
-    t: "What's next",
-    body: "Fewer, deeper engagements. The same team. Engineering that compounds.",
+    t: "Building deeper",
+    body: "Active client engagements across regions. SaaS products in development internally — not yet launched, but close. Engineering that compounds with every engagement.",
   },
 ];
 

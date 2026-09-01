@@ -311,4 +311,129 @@
   100% {
     transform: translateX(200%);
   }
+}
+
+/* ==========================================
+ * HERO ANIMATION ADDITIONS
+ * ========================================== */
+
+@keyframes flow-particle {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    stroke-dashoffset: -1200;
+    opacity: 0;
+  }
+}
+
+@utility animate-flow-particle {
+  animation: flow-particle 3s linear infinite;
+}
+
+@keyframes core-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+@utility animate-core-ping {
+  animation: core-ping 2.8s cubic-bezier(0.2, 0, 0.6, 1) infinite;
+}
+
+@keyframes orbit-chip-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(12px);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@utility animate-chip-in {
+  animation: orbit-chip-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-word-in {
+  0% {
+    opacity: 0;
+    transform: translateY(0.35em) skewY(3deg);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) skewY(0);
+    filter: blur(0);
+  }
+}
+
+@utility animate-word-in {
+  animation: hero-word-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-word-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0) skewY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-0.25em) skewY(-2deg);
+    filter: blur(6px);
+  }
+}
+
+@utility animate-word-out {
+  animation: hero-word-out 0.5s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes drift-y {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@utility animate-drift {
+  animation: drift-y 6s ease-in-out infinite;
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); opacity: 0.6; }
+  100% { transform: translateY(400%); opacity: 0; }
+}
+
+@utility animate-scan {
+  animation: scan-line 4s linear infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50% { opacity: 0.22; transform: scale(1.08); }
+}
+
+@utility animate-glow-pulse {
+  animation: glow-pulse 5s ease-in-out infinite;
+}
+
+@keyframes shimmer-ray {
+  0% { stroke-dashoffset: 300; opacity: 0; }
+  30% { opacity: 0.6; }
+  70% { opacity: 0.4; }
+  100% { stroke-dashoffset: -300; opacity: 0; }
 }
